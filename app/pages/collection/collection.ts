@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {NavController, ActionSheet} from 'ionic-angular';
 import {OnInit} from '@angular/core';
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
 import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
@@ -25,5 +25,17 @@ export class CollectionPage implements OnInit {
       });
     })
     .catch(console.error.bind(console));
+  }
+  pressAction(item){
+    let actionSheet = ActionSheet.create({
+      title: 'action',
+      buttons: [
+        {
+          text: ''
+        }
+      ]
+    })
+    console.log("pressedd");
+    console.log(item._id);
   }
 }

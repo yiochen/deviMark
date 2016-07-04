@@ -6,7 +6,7 @@
 </ion-navbar>
 
 <ion-content class="about">
-  <preview-image [showSaveButton]=false *ngFor="let item of bookmarks" [artwork]="item" >
+  <preview-image (press)="pressAction(item)" [showSaveButton]=false *ngFor="let item of bookmarks" [artwork]="item" >
   </preview-image>
 </ion-content>
 
