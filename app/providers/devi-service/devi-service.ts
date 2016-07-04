@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Xml } from '../xml/xml';
-
+import { Artwork } from '../artwork/artwork'
 /*
   Generated class for the DeviService provider.
 
@@ -12,20 +12,20 @@ import { Xml } from '../xml/xml';
 @Injectable()
 export class DeviService {
 
-        dataHome: any;
-        dataSearch: any;
-        data: any;
+        dataHome: Artwork[];
+        dataSearch: Artwork[];
+        data: Artwork[];
 
         constructor(private http: Http, private xml: Xml) {
                 this.data = null;
                 this.dataHome = null;
                 this.dataSearch = null;
-                // this.mock();
+               
         }
 
-        loadSearch(key:string) {
-                let encodedKey=encodeURI(key);
-                this.dataSearch=null;
+        loadSearch(key: string) {
+                let encodedKey = encodeURI(key);
+                this.dataSearch = null;
                 return this.load("dataSearch", `http://backend.deviantart.com/rss.xml?q=boost%3Apopular+${encodedKey}&amp;type=deviation`);
         }
         loadHome() {
@@ -54,12 +54,14 @@ export class DeviService {
         }
         process(data) {
                 return data.rss.channel.item.filter(item => typeof item.thumbnail == "object")
-                        .map(item => ({
+                        .map(item => new Artwork({
+                                name: item.title[0] || "unnamed",
                                 link: item.link,
                                 thumbnail: item.thumbnail.reduce(
                                         (preThumb, curThumb, index) => (+curThumb._height) * (+curThumb._width) >= (+preThumb._height) * (+preThumb._width) ? curThumb : preThumb,
                                         { _height: 0, _width: 0 }
                                 )
-                        }));
+                                })
+                        );
         }
 }

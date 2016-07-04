@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {OnInit} from '@angular/core';
 import {DeviService} from '../../providers/devi-service/devi-service';
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
+
 @Component({
   templateUrl: 'build/pages/home/home.html',
   directives:[PreviewImageComponent]

@@ -10,7 +10,8 @@
     <button *ngIf="search_bar.value" block large (tap)="search(keyword)">Search</button>
   </ion-card>
    <preview-image *ngFor="let item of items" 
-  [src]="item.thumbnail._url" (error)="console.log('error loading')"></preview-image>
+   [artwork]="item"
+   (error)="console.log('error loading')"></preview-image>
   <!--<ion-list>
     <ion-list-header>Follow us on Twitter</ion-list-header>
     <ion-item>

@@ -3,8 +3,8 @@
 </ion-navbar>
 
 <ion-content class="home" >
-  <preview-image *ngFor="let item of items" 
-  [src]="item.thumbnail._url" (error)="console.log('error loading')"></preview-image>
- 
+  <preview-image *ngFor="let artwork of items" 
+  [artwork]="artwork"
+   (error)="console.log('error loading')"></preview-image>
 </ion-content>
 

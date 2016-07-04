@@ -5,5 +5,9 @@
   </ion-title>
 </ion-navbar>
 
-<ion-content padding class="about">
+<ion-content class="about">
+  <preview-image [showSaveButton]=false *ngFor="let item of bookmarks" [artwork]="item" >
+  </preview-image>
 </ion-content>
+
+ <!---->

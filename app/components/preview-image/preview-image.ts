@@ -1,13 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
+import {Artwork} from '../../providers/artwork/artwork';
 @Component({
     selector: 'preview-image',
-    templateUrl: 'build/components/preview-image/preview-image.html',
+    templateUrl: 'build/components/preview-image/preview-image.html'
 })
 export class PreviewImageComponent implements OnInit {
-    @Input()src;
-    constructor() { }
+    @Input() artwork;
+    @Input() showSaveButton = true;
+    constructor(private bookmarkService:BookmarkService) { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+
+    }
+    saveToCollection(artwork){
+        this.bookmarkService.add(artwork);
+    }
 
 }
