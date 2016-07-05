@@ -69,11 +69,12 @@ export class BookmarkService {
     var artwork = this._artworks[index];
 
     if (change.deleted) {
+      console.log("deleted");
       if (artwork) {
         this._artworks.splice(index, 1);
       }
     }else{
-     
+     console.log("data changed");
       if (artwork && artwork._id === change.id) {
         this._artworks[index] =  change.doc;
        

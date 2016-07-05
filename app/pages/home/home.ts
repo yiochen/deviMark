@@ -1,9 +1,10 @@
 import {Component, NgZone} from '@angular/core';
-import {NavController, ActionSheet} from 'ionic-angular';
+import {NavController, ActionSheet, Modal} from 'ionic-angular';
 import {OnInit} from '@angular/core';
 import {DeviService} from '../../providers/devi-service/devi-service';
 import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
+import {ImageModal} from '../../components/image-modal/image-modal';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
@@ -21,6 +22,7 @@ export class HomePage implements OnInit {
     .then(items=>this.items=items);
   }
   pressAction(item){
+    console.log(item);
     let actionSheet = ActionSheet.create({
       title: 'action',
       buttons: [
@@ -29,9 +31,19 @@ export class HomePage implements OnInit {
           handler: () => {
             this.bookmarkService.add(item);
           }
+        },
+        {
+          text: 'open modal',
+          handler: () => this.showImageModal(item)
+          
         }
       ]
     });
     this.navController.present(actionSheet);
+  }
+
+  showImageModal(item){
+    let modal = Modal.create(ImageModal, {item:item});
+    this.navController.present(modal);
   }
 }

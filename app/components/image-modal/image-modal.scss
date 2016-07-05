@@ -1,0 +1,14 @@
+.image-card{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    padding:0;
+    margin:0;
+    background:black;
+    img{
+        height:100%;
+        width:100%;
+        margin:0;
+        object-fit:contain;
+    }
+}
