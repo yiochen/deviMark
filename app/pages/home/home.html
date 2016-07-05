@@ -1,11 +1,12 @@
-<ion-navbar *navbar dark>
+<ion-navbar *navbar dark class="nav-toolbar">
+  <ion-buttons dark end>
+    <button>
+    <ion-icon name="options"></ion-icon>
+    </button>
+  </ion-buttons>
   <ion-title>Home</ion-title>
 </ion-navbar>
 
 <ion-content class="home" dark>
-  <preview-image *ngFor="let item of items" 
-  (press)="pressAction(item)"
-  [artwork]="item"
-   (error)="console.log('error loading')"></preview-image>
+  <preview-image *ngFor="let item of items" (press)="pressAction(item)" [artwork]="item" (error)="console.log('error loading')"></preview-image>
 </ion-content>
-

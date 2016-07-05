@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Modal, NavController, ViewController, NavParams } from 'ionic-angular';
 import { Artwork } from '../../providers/artwork/artwork';
-
+import { Insomnia } from 'ionic-native';
 
 @Component({
     templateUrl: 'build/components/image-modal/image-modal.html'
@@ -16,14 +16,17 @@ export class ImageModal implements OnInit {
     }
     ngOnInit() {
         this.item = this.params.get('item');
+        Insomnia.keepAwake().then(
+            () => console.log('success'),
+            () => console.log('error')
+        );
     }
     close() {
+        Insomnia.allowSleepAgain().then(
+            () => console.log('success'),
+            () => console.log('error')
+        );
         this.viewCtrl.dismiss();
     }
-    getBackground(){
-        var test="http://www.gravatar.com/avatar/64537dfe80f44978663e378d375c7138?s=150&d=identicon&r=PG";
-        var style='url('+test+')';
-        console.log(style);
-        return style;
-    }
+    
 }
