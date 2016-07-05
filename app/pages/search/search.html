@@ -1,10 +1,10 @@
-<ion-navbar *navbar>
+<ion-navbar *navbar dark>
   <ion-title>
     Search
   </ion-title>
 </ion-navbar>
 
-<ion-content>
+<ion-content class="search">
   
     <ion-searchbar id="search_bar" placeholder="search keyword" [(ngModel)]="keyword" 
     (search)="search(keyword)"></ion-searchbar>
