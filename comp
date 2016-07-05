@@ -1,0 +1,10 @@
+#!/bin/sh
+COMP_NAME=$1
+echo "generating component" COMP_NAME
+echo "@import \"../components/$COMP_NAME/$COMP_NAME\";" >> app/theme/app.core.scss
+cd app/components
+mkdir $COMP_NAME
+cd $COMP_NAME
+touch $COMP_NAME.html
+touch $COMP_NAME.scss
+touch $COMP_NAME.ts

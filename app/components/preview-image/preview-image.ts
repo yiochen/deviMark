@@ -7,7 +7,7 @@ import {Artwork} from '../../providers/artwork/artwork';
 })
 export class PreviewImageComponent implements OnInit {
     @Input() artwork;
-    @Input() showSaveButton = true;
+    @Input() showSaveButton = false;
     constructor(private bookmarkService:BookmarkService) { }
 
     ngOnInit() { 

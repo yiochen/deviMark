@@ -1,17 +1,20 @@
 <ion-navbar *navbar>
   <ion-title>
-    Contact
+    Search
   </ion-title>
 </ion-navbar>
 
 <ion-content>
-  <ion-card padding>
-    <ion-searchbar #search_bar placeholder="search keyword" [(ngModel)]="keyword" ></ion-searchbar>
-    <button *ngIf="search_bar.value" block large (tap)="search(keyword)">Search</button>
-  </ion-card>
+  
+    <ion-searchbar id="search_bar" placeholder="search keyword" [(ngModel)]="keyword" 
+    (search)="search(keyword)"></ion-searchbar>
+    <!--<button *ngIf="search_bar.value" block large (tap)="search(keyword)">Search</button>-->
+    <div>
    <preview-image *ngFor="let item of items" 
+   (press)="pressAction(item)"
    [artwork]="item"
    (error)="console.log('error loading')"></preview-image>
+   </div>
   <!--<ion-list>
     <ion-list-header>Follow us on Twitter</ion-list-header>
     <ion-item>

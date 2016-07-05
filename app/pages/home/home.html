@@ -4,6 +4,7 @@
 
 <ion-content class="home" >
   <preview-image *ngFor="let artwork of items" 
+  (press)="pressAction(item)"
   [artwork]="artwork"
    (error)="console.log('error loading')"></preview-image>
 </ion-content>

@@ -31,10 +31,15 @@ export class CollectionPage implements OnInit {
       title: 'action',
       buttons: [
         {
-          text: ''
+          text: 'Remove',
+          role: 'destructive',
+          handler: ()=>{
+            this.bookmarkService.delete(item);
+          }
         }
       ]
-    })
+    });
+    this.navController.present(actionSheet);
     console.log("pressedd");
     console.log(item._id);
   }
