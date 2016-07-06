@@ -19,14 +19,13 @@ export class MyApp {
   constructor(private platform:Platform,
   private bookmarkService:BookmarkService,
   private settingsService:SettingsService) {
-    //this.rootPage = TabsPage;
-    this.rootPage = SettingsPage;
+    this.rootPage = TabsPage;
+    // this.rootPage = SettingsPage;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       bookmarkService.initDB();
-      bookmarkService.getAll();
       settingsService.initDB();
     });
   }

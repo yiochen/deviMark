@@ -8,6 +8,7 @@ let SETTINGS_ID = "settings_id";
 export class Settings {
   _id = SETTINGS_ID;
   mature = false;
+  _rev:any;
 }
 /*
   Generated class for the SettingsService provider.

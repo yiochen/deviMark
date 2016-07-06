@@ -21,7 +21,7 @@ export class BookmarkService {
   initDB() {
     this._db = new PouchDB('bookmarks', { adapter: 'websql' });
     this._db.info().then(console.log.bind(console));
-    
+    console.log("created bookmark db");
   }
 
   add(artwork) {
@@ -42,9 +42,8 @@ export class BookmarkService {
           this._artworks = docs.rows.map(row => row.doc);
           this._db.changes({ live: true, since: 'now', include_docs: true })
             .on('change', this.onDatabaseChange);
-       
+          return this._artworks;
         });
-
     }else{
       return Promise.resolve(this._artworks);
     }
