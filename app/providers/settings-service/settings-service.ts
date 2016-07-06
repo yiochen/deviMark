@@ -28,10 +28,7 @@ export class SettingsService {
     console.log("creating db");
     this._db = new PouchDB('settings', { adapter: 'websql' });
     console.log(this._db);
-    this._db.info().then(console.log.bind(console)).then(
-      () => this._db.changes({ live: true, since: 'now', include_docs: true })
-        .on('change', this.onDatabaseChange)
-    );
+    this._db.info().then(console.log.bind(console));
   }
 
   get() {
@@ -40,9 +37,8 @@ export class SettingsService {
         .catch(err => {
           console.log('creating new setting object');
           let settings = new Settings();
-          return this._db.put(settings)
-        }).then(() =>this._db.get(SETTINGS_ID))
-        .then(dbSettings => this._settings = dbSettings)
+          return this._db.put(settings).then(() =>this._db.get(SETTINGS_ID))
+        }).then(dbSettings => this._settings = dbSettings)
         .then(() => this._settings);
     } else {
       return Promise.resolve(this._settings);
@@ -60,31 +56,5 @@ export class SettingsService {
     .catch(err => console.log(err));
   }
 
-  // .then(docs => {
-  //   if (docs.rows.length<=0){
-  //     //there is no settings yet.
-  //     this._settings= new Settings();
-  //     return this._db.put(this._settings);
-  //   }
-  // })
-  // .then(
-  //   ()=>
-  // )
-  // else{
-  //     this._settings = docs.rows[0].doc;
-  //   }
-
-  //   this._db.changes({ live: true, since: 'now', include_docs: true })
-  //     .on('change', this.onDatabaseChange);
-
-  // })
-  // .then(
-  //   settings
-
-
-  private onDatabaseChange = (change) => {
-    console.log('value changed');
-    //handle changes
-  }
 }
 
