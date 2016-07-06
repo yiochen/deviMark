@@ -61,7 +61,12 @@ export class SettingsService {
   }
 
   isAllowedByMatureSettings(item){
-    return this._settings.mature || !item.mature;
+    // console.log(this._settings.mature);
+    // console.log(item.mature);
+    // console.log("compare "+(this._settings.mature === item.mature));
+    // console.log("the final result is "+((this._settings.mature === item.mature) || this._settings.mature || !item.mature));
+    
+    return (this._settings.mature === item.mature) || this._settings.mature || !item.mature;
   }
 
 }

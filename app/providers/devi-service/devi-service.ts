@@ -62,7 +62,7 @@ export class DeviService {
                         .map(item => new Artwork({
                                 name: item.title[0] || "unnamed",
                                 link: item.link,
-                                mature: item.rating._text!=="nonadult",//TODO: I can test it here, test it back.
+                                mature: item.rating.__text!=="nonadult",//TODO: I can test it here, test it back.
                                 thumbnail: item.thumbnail.reduce(
                                         (preThumb, curThumb, index) => (+curThumb._height) * (+curThumb._width) >= (+preThumb._height) * (+preThumb._width) ? curThumb : preThumb,
                                         { _height: 0, _width: 0 }
