@@ -6,6 +6,7 @@ import {BookmarkService} from '../../providers/bookmark-service/bookmark-service
 import {Artwork} from '../../providers/artwork/artwork';
 import {ImageModal} from '../../components/image-modal/image-modal';
 import {SettingsPage} from '../settings/settings';
+import {SettingsService} from '../../providers/settings-service/settings-service';
 @Component({
   templateUrl: 'build/pages/collection/collection.html',
   directives: [PreviewImageComponent]
@@ -15,10 +16,12 @@ export class CollectionPage implements OnInit {
 
   constructor(private navController: NavController,
     private bookmarkService: BookmarkService,
+    private settingsService: SettingsService,
     private zone: NgZone
   ) {
   }
   ngOnInit() {
+    this.settingsService.get();
     this.bookmarkService.getAll()
       .then(data => {
         console.log(data);

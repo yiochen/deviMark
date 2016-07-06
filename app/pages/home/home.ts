@@ -6,22 +6,31 @@ import {BookmarkService} from '../../providers/bookmark-service/bookmark-service
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
 import {ImageModal} from '../../components/image-modal/image-modal';
 import {SettingsPage} from '../settings/settings';
+import {SettingsService} from '../../providers/settings-service/settings-service';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
   directives: [PreviewImageComponent]
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit{
   items: any[];
   constructor(private navController: NavController,
     private deviService: DeviService,
-    private bookmarkService: BookmarkService) {
+    private bookmarkService: BookmarkService,
+    private settingsService: SettingsService) {
 
   }
-  ngOnInit() {
+
+  ngOnInit(){
+    this.settingsService.get();
+  }
+
+  onPageWillEnter() {
+    console.log("load home");
     this.deviService.loadHome()
       .then(items => this.items = items);
   }
+  
   pressAction(item) {
     console.log(item);
     let actionSheet = ActionSheet.create({
@@ -42,7 +51,7 @@ export class HomePage implements OnInit {
     });
     this.navController.present(actionSheet);
   }
-
+ 
   showImageModal(item) {
     let modal = Modal.create(ImageModal, { item: item });
     this.navController.present(modal);

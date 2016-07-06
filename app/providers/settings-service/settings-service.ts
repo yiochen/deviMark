@@ -20,7 +20,7 @@ export class Settings {
 export class SettingsService {
   private _db;
   private _settings: Settings;
-
+  public settingsReady=false;
   constructor() {
 
   }
@@ -39,7 +39,10 @@ export class SettingsService {
           console.log('creating new setting object');
           let settings = new Settings();
           return this._db.put(settings).then(() =>this._db.get(SETTINGS_ID))
-        }).then(dbSettings => this._settings = dbSettings)
+        }).then(dbSettings => {
+          this._settings = dbSettings;
+          this.settingsReady=true;
+        })
         .then(() => this._settings);
     } else {
       return Promise.resolve(this._settings);
@@ -55,6 +58,10 @@ export class SettingsService {
     .then(()=>this._db.get(SETTINGS_ID))
     .then(dbSetting=>this._settings=dbSetting)
     .catch(err => console.log(err));
+  }
+
+  isAllowedByMatureSettings(item){
+    return this._settings.mature || !item.mature;
   }
 
 }

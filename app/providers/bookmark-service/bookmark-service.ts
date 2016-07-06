@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 
 let PouchDB = require('pouchdb');
-window["PouchDB"] = PouchDB;  
+window["PouchDB"] = PouchDB;
 
 /*
   Generated class for the BookmarkService provider.
@@ -15,8 +15,8 @@ export class BookmarkService {
   private _db;
   private _artworks;
 
-  constructor(){
-    
+  constructor() {
+
   }
   initDB() {
     this._db = new PouchDB('bookmarks', { adapter: 'websql' });
@@ -25,9 +25,9 @@ export class BookmarkService {
   }
 
   add(artwork) {
-    
-    let newArtwork={};
-    Object.assign(newArtwork,artwork,{_id:new Date().getTime()+''});
+
+    let newArtwork = {};
+    Object.assign(newArtwork, artwork, { _id: new Date().getTime() + '' });
     return this._db.put(newArtwork);
   }
 
@@ -44,24 +44,24 @@ export class BookmarkService {
             .on('change', this.onDatabaseChange);
           return this._artworks;
         });
-    }else{
+    } else {
       return Promise.resolve(this._artworks);
     }
   }
 
   //TODO: bad design
   //the index returned by this function is not the index of the element if the element with that id doesn't exist.
-  private findIndex(array, id){
+  private findIndex(array, id) {
     var low = 0, high = array.length, mid;
     while (low < high) {
       mid = (low + high) >>> 1;
-      array[mid]._id < id ? low = mid +1 : high = mid;
+      array[mid]._id < id ? low = mid + 1 : high = mid;
     }
     return low;
   }
- 
- //use instance arrow function to prevent lost of this context
-  private onDatabaseChange=(change)=>{
+
+  //use instance arrow function to prevent lost of this context
+  private onDatabaseChange = (change) => {
     var index = this.findIndex(this._artworks, change.id);
     var artwork = this._artworks[index];
 
@@ -70,17 +70,17 @@ export class BookmarkService {
       if (artwork) {
         this._artworks.splice(index, 1);
       }
-    }else{
-     console.log("data changed");
+    } else {
+      console.log("data changed");
       if (artwork && artwork._id === change.id) {
-        this._artworks[index] =  change.doc;
-       
-      }else{
+        this._artworks[index] = change.doc;
+
+      } else {
         this._artworks.splice(index, 0, change.doc);
       }
     }
   }
 
-  
+
 }
 

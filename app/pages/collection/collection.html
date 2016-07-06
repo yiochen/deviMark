@@ -1,4 +1,3 @@
-
 <ion-navbar *navbar dark>
   <ion-buttons dark end>
     <button (click)="openSettings()">
@@ -10,9 +9,11 @@
   </ion-title>
 </ion-navbar>
 
-<ion-content class="collection" >
-  <preview-image (press)="pressAction(item)"  *ngFor="let item of bookmarks" [artwork]="item" >
-  </preview-image>
+<ion-content class="collection">
+  <div *ngIf="settingsService.settingsReady">
+    <preview-image (press)="pressAction(item)" *ngFor="let item of bookmarks" [artwork]="item" [hidden]="!settingsService.isAllowedByMatureSettings(item)">
+    </preview-image>
+  </div>
 </ion-content>
 
- <!---->
+<!---->

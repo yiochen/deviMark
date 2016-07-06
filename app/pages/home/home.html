@@ -8,5 +8,8 @@
 </ion-navbar>
 
 <ion-content class="home" dark>
-  <preview-image *ngFor="let item of items" (press)="pressAction(item)" [artwork]="item" (error)="console.log('error loading')"></preview-image>
+  <div *ngIf="settingsService.settingsReady">
+    <preview-image *ngFor="let item of items" (press)="pressAction(item)" [artwork]="item" [hidden]="!settingsService.isAllowedByMatureSettings(item)"
+      (error)="console.log('error loading')"></preview-image>
+  </div>
 </ion-content>
