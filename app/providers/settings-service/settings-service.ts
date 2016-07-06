@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 let PouchDB = require('pouchdb');
 window["PouchDB"] = PouchDB;
 
-let SETTINGS_ID= "settings_id";
+let SETTINGS_ID = "settings_id";
 export class Settings {
-  _id=SETTINGS_ID;
-  mature=true;
-}  
+  _id = SETTINGS_ID;
+  mature = false;
+}
 /*
   Generated class for the SettingsService provider.
 
@@ -18,52 +18,73 @@ export class Settings {
 @Injectable()
 export class SettingsService {
   private _db;
-  private _settings:Settings;
+  private _settings: Settings;
 
   constructor() {
-    
+
   }
 
   initDB() {
+    console.log("creating db");
     this._db = new PouchDB('settings', { adapter: 'websql' });
-    this._db.info().then(console.log.bind(console));
+    console.log(this._db);
+    this._db.info().then(console.log.bind(console)).then(
+      () => this._db.changes({ live: true, since: 'now', include_docs: true })
+        .on('change', this.onDatabaseChange)
+    );
   }
 
-  get(){
+  get() {
     if (!this._settings) {
       return this._db.get(SETTINGS_ID)
-      .then(docs => {
-        if (docs.rows.length<=0){
-          //there is no settings yet.
-          this._settings= new Settings();
-          return this._db.put(this._settings);
-        }
-      })
-      .then(
-        ()=>
-      )
-      // else{
-      //     this._settings = docs.rows[0].doc;
-      //   }
-        
-      //   this._db.changes({ live: true, since: 'now', include_docs: true })
-      //     .on('change', this.onDatabaseChange);
-
-      // })
-      // .then(
-      //   settings
-      // );
-    }else{
+        .catch(err => {
+          console.log('creating new setting object');
+          let settings = new Settings();
+          return this._db.put(settings)
+        }).then(() =>this._db.get(SETTINGS_ID))
+        .then(dbSettings => this._settings = dbSettings)
+        .then(() => this._settings);
+    } else {
       return Promise.resolve(this._settings);
     }
   }
 
-  private onDatabaseChange=(change)=>{
-    //handle changes
+  updateDB(settings) {
+    let id=this._settings._id;
+    let rev=this._settings['_rev'];
+    Object.assign(this._settings, settings, {_id:id, _rev:rev});
+    console.log(this._settings);
+    return this._db.put(this._settings)
+    .then(()=>this._db.get(SETTINGS_ID))
+    .then(dbSetting=>this._settings=dbSetting)
+    .catch(err => console.log(err));
   }
 
+  // .then(docs => {
+  //   if (docs.rows.length<=0){
+  //     //there is no settings yet.
+  //     this._settings= new Settings();
+  //     return this._db.put(this._settings);
+  //   }
+  // })
+  // .then(
+  //   ()=>
+  // )
+  // else{
+  //     this._settings = docs.rows[0].doc;
+  //   }
+
+  //   this._db.changes({ live: true, since: 'now', include_docs: true })
+  //     .on('change', this.onDatabaseChange);
+
+  // })
+  // .then(
+  //   settings
 
 
-  
+  private onDatabaseChange = (change) => {
+    console.log('value changed');
+    //handle changes
+  }
 }
 

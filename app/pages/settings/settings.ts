@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-
+import { Component, OnInit } from '@angular/core';
+import { NavController, Platform } from 'ionic-angular';
+import { SettingsService, Settings} from '../../providers/settings-service/settings-service';
 /*
   Generated class for the SettingsPage page.
 
@@ -8,8 +8,20 @@ import { NavController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/settings/settings.html',
+  templateUrl: 'build/pages/settings/settings.html'
 })
-export class SettingsPage {
-  constructor(private nav: NavController) {}
+export class SettingsPage implements OnInit {
+  settings:Settings;
+  constructor(private nav: NavController,
+    private settingsService:SettingsService,
+    private platform:Platform
+  ) {}
+  ngOnInit(){
+    this.platform.ready().then(()=>this.settingsService.get()).then(settings=>this.settings=settings);
+  }
+  updateSettings(checked) {
+    this.settingsService.updateDB(this.settings)
+    .then(()=>this.settingsService.get())
+    .then(dbSettings=>this.settings=dbSettings);
+  }
 }

@@ -5,19 +5,20 @@ import {TabsPage} from './pages/tabs/tabs';
 import {Xml} from './providers/xml/xml';
 import {DeviService} from './providers/devi-service/devi-service';
 import {BookmarkService} from './providers/bookmark-service/bookmark-service';
-
+import {SettingsService} from './providers/settings-service/settings-service';
 import {SettingsPage} from './pages/settings/settings';
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
-  providers:[Xml, DeviService, BookmarkService]
+  providers:[Xml, DeviService, BookmarkService, SettingsService]
 })
 export class MyApp {
 
   private rootPage:any;
 
   constructor(private platform:Platform,
-  private bookmarkService:BookmarkService) {
+  private bookmarkService:BookmarkService,
+  private settingsService:SettingsService) {
     //this.rootPage = TabsPage;
     this.rootPage = SettingsPage;
     platform.ready().then(() => {
@@ -26,6 +27,7 @@ export class MyApp {
       StatusBar.styleDefault();
       bookmarkService.initDB();
       bookmarkService.getAll();
+      settingsService.initDB();
     });
   }
 }
