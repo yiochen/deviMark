@@ -5,13 +5,14 @@ import {DeviService} from '../../providers/devi-service/devi-service';
 import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
 import {ImageModal} from '../../components/image-modal/image-modal';
+import {SettingsPage} from '../settings/settings';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
-  directives:[PreviewImageComponent]
+  directives: [PreviewImageComponent]
 })
 export class HomePage implements OnInit {
-  items:any[];
+  items: any[];
   constructor(private navController: NavController,
     private deviService: DeviService,
     private bookmarkService: BookmarkService) {
@@ -19,9 +20,9 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
     this.deviService.loadHome()
-    .then(items=>this.items=items);
+      .then(items => this.items = items);
   }
-  pressAction(item){
+  pressAction(item) {
     console.log(item);
     let actionSheet = ActionSheet.create({
       title: 'action',
@@ -35,15 +36,18 @@ export class HomePage implements OnInit {
         {
           text: 'open modal',
           handler: () => this.showImageModal(item)
-          
+
         }
       ]
     });
     this.navController.present(actionSheet);
   }
 
-  showImageModal(item){
-    let modal = Modal.create(ImageModal, {item:item});
+  showImageModal(item) {
+    let modal = Modal.create(ImageModal, { item: item });
     this.navController.present(modal);
+  }
+  openSettings() {
+    this.navController.push(SettingsPage);
   }
 }

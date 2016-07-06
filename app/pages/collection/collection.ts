@@ -5,6 +5,7 @@ import {PreviewImageComponent} from '../../components/preview-image/preview-imag
 import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
 import {Artwork} from '../../providers/artwork/artwork';
 import {ImageModal} from '../../components/image-modal/image-modal';
+import {SettingsPage} from '../settings/settings';
 @Component({
   templateUrl: 'build/pages/collection/collection.html',
   directives: [PreviewImageComponent]
@@ -19,29 +20,29 @@ export class CollectionPage implements OnInit {
   }
   ngOnInit() {
     this.bookmarkService.getAll()
-    .then(data => {
-     console.log(data);
-      this.zone.run(() => {
-        this.bookmarks = data;
-        
-      });
-    })
-    .catch(console.error.bind(console));
+      .then(data => {
+        console.log(data);
+        this.zone.run(() => {
+          this.bookmarks = data;
+
+        });
+      })
+      .catch(console.error.bind(console));
   }
-  pressAction(item){
+  pressAction(item) {
     let actionSheet = ActionSheet.create({
       title: 'action',
       buttons: [
         {
           text: 'Remove',
           role: 'destructive',
-          handler: ()=>{
+          handler: () => {
             this.bookmarkService.delete(item);
           }
         },
         {
           text: 'Open modal',
-          handler: ()=>this.showImageModal(item)
+          handler: () => this.showImageModal(item)
         }
       ]
     });
@@ -50,8 +51,12 @@ export class CollectionPage implements OnInit {
     console.log(item._id);
   }
 
-  showImageModal(item){
-    let modal = Modal.create(ImageModal, {item:item});
+  showImageModal(item) {
+    let modal = Modal.create(ImageModal, { item: item });
     this.navController.present(modal);
+  }
+
+  openSettings() {
+    this.navController.push(SettingsPage);
   }
 }

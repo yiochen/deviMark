@@ -5,6 +5,7 @@ import {DeviService} from '../../providers/devi-service/devi-service';
 import {BookmarkService} from '../../providers/bookmark-service/bookmark-service';
 import {PreviewImageComponent} from '../../components/preview-image/preview-image';
 import {ImageModal} from '../../components/image-modal/image-modal';
+import {SettingsPage} from '../settings/settings';
 @Component({
   templateUrl: 'build/pages/search/search.html',
   directives: [PreviewImageComponent]
@@ -47,5 +48,8 @@ export class SearchPage {
   showImageModal(item) {
     let modal = Modal.create(ImageModal, { item: item });
     this.navController.present(modal);
+  }
+  openSettings(){
+    this.navController.push(SettingsPage);
   }
 }
