@@ -1,4 +1,4 @@
 <ion-card class="preview-image">
-    <img [src]="artwork.thumbnail._url"/>
+    <img [src]="artwork.thumbnail"/>
     <button *ngIf="showSaveButton" fab fab-bottom fab-right (click)="saveToCollection(artwork)"><ion-icon name="add"></ion-icon></button> 
 </ion-card>

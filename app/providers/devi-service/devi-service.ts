@@ -58,7 +58,7 @@ export class DeviService {
         }
         process(data) {
                 console.log(data);
-                return data.rss.channel.item.filter(item => typeof item.thumbnail == "object")
+                return data.rss.channel.item.filter(item => item.content._medium === "image")
                         .map(item => new Artwork({
                                 name: item.title[0] || "unnamed",
                                 link: item.link,
@@ -66,7 +66,8 @@ export class DeviService {
                                 thumbnail: item.thumbnail.reduce(
                                         (preThumb, curThumb, index) => (+curThumb._height) * (+curThumb._width) >= (+preThumb._height) * (+preThumb._width) ? curThumb : preThumb,
                                         { _height: 0, _width: 0 }
-                                )
+                                )._url,
+                                content: item.content._url
                         })
                         );
         }
